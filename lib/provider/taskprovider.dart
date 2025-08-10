@@ -16,6 +16,8 @@ Future<sql.Database> _getDatabase() async {
           id TEXT PRIMARY KEY,
           title TEXT,
           taskid TEXT,
+
+          
           note TEXT,
           day INTEGER,
           weekday INTEGER,
@@ -41,13 +43,8 @@ class TotalNotifier extends StateNotifier<List<Task>> {
   TotalNotifier() : super([]);
 
   Future<void> addTotal(Task task, bool atLast) async {
-    
-        
     final db = await _getDatabase();
-    await db.insert(
-      'totals',
-      task.toMap(),
-    );
+    await db.insert('totals', task.toMap());
     if (atLast) {
       state = [...state, task];
     } else {
@@ -68,6 +65,7 @@ class TotalNotifier extends StateNotifier<List<Task>> {
     final total = data.map((map) => Task.fromMap(map)).toList();
     state = total;
   }
+
   Future<void> updateTotal(Task updatedTask) async {
     final db = await _getDatabase();
 
